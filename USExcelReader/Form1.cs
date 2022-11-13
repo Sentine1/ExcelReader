@@ -17,6 +17,7 @@ namespace USExcelReader
         private String[,] excelTableData;
         private int totalRows = 0;
         private int totalCollumns = 0;
+
         public Form1()
         {
             InitializeComponent();
@@ -32,7 +33,7 @@ namespace USExcelReader
                 {
                     ExcelPackage excelFile = new ExcelPackage(new FileInfo(openFileDialog1.FileName));
 
-                    ExcelWorksheet worksheet = excelFile.Workbook.Worksheets[1];
+                    ExcelWorksheet worksheet = excelFile.Workbook.Worksheets[0];
 
                     totalRows = worksheet.Dimension.End.Row;
                     totalCollumns = worksheet.Dimension.End.Column;
@@ -45,7 +46,7 @@ namespace USExcelReader
                         var list = row.ToList();
                         for (int i = 0; i < list.Count; i++)
                         {
-                            excelTableData[rowIndex, i] = list[i];
+                            excelTableData[rowIndex - 1, i] = list[i];
                         }
                     }
 
