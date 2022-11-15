@@ -17,6 +17,8 @@ namespace USExcelReader
         private String[,] excelTableData;
         private int totalRows = 0;
         private int totalCollumns = 0;
+        private string userName = null;
+        private string usserLogin = null;
 
         public Form1()
         {
@@ -42,22 +44,21 @@ namespace USExcelReader
 
                     for (int rowIndex = 1; rowIndex < totalRows + 1; rowIndex++)
                     {
-                        IEnumerable<string> row = worksheet.Cells[rowIndex, 1, rowIndex, totalCollumns].Select(c => c.Value == null ? string.Empty : c.Value.ToString());
-                        var list = row.ToList();
-                        for (int i = 0; i < list.Count; i++)
+                        var ew = new List<string>();
+                        for (int collumTest = 1; collumTest < totalCollumns + 1; collumTest++)
                         {
-                            excelTableData[rowIndex - 1, i] = list[i];
+                            ew.Add(worksheet.Cells[rowIndex, collumTest].Text);
                         }
-                    }
 
-                    for (int i = 0; i < totalRows; i++)
-                    {
-                        for (int j = 0; j < totalCollumns; j++)
+                        IEnumerable<string> row = worksheet.Cells[rowIndex, 1, rowIndex, totalCollumns].Select(c => c.Text == null ? string.Empty : c.Text);
+                        var list = row.ToList();
+                        var list2 = ew.ToList();
+                        for (int i = 0; i < list2.Count; i++)
                         {
-                            richTextBox1.Text += excelTableData[i, j] + " ";
+                            excelTableData[rowIndex - 1, i] = list2[i] == string.Empty ? "*" : list2[i];
                         }
-                        richTextBox1.Text += "\n";
                     }
+                    writeText();
                 }
                 else
                     throw new Exception("File not found");
@@ -66,6 +67,38 @@ namespace USExcelReader
             {
                 MessageBox.Show(ex.Message, "Error!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }  
+        }
+
+        protected void writeText()
+        {
+            richTextBox1.Clear();
+            for (int i = 0; i < totalRows; i++)
+            {
+                for (int j = 0; j < totalCollumns; j++)
+                {
+                    if (textBox1.Text != string.Empty )
+                        if (excelTableData[i, 2] != userName ||
+                        excelTableData[i, 3] != usserLogin)
+                        {
+                            j += totalCollumns;
+                            continue;
+                        }
+                    richTextBox1.Text += excelTableData[i, j] + " ";
+                }
+                richTextBox1.Text += "\n";
+            }
+        }
+
+        private void тестToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            userName = textBox1.Text;
+            writeText();
+        }
+
+        private void тестToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            usserLogin = textBox1.Text;
+            writeText();
         }
     }
 }
