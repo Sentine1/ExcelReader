@@ -29,6 +29,7 @@ namespace USExcelReader
         {
             try
             {
+                ExcelPackage.LicenseContext = OfficeOpenXml.LicenseContext.NonCommercial;
                 DialogResult res = openFileDialog1.ShowDialog();
 
                 if (res == DialogResult.OK)

@@ -81,8 +81,8 @@ namespace USExcelReader
             // тестToolStripMenuItem
             // 
             this.тестToolStripMenuItem.Name = "тестToolStripMenuItem";
-            this.тестToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
-            this.тестToolStripMenuItem.Text = "тест";
+            this.тестToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.тестToolStripMenuItem.Text = "Поиск по ФИО";
             this.тестToolStripMenuItem.Click += new System.EventHandler(this.тестToolStripMenuItem_Click);
             // 
             // логинToolStripMenuItem
@@ -96,8 +96,8 @@ namespace USExcelReader
             // тестToolStripMenuItem1
             // 
             this.тестToolStripMenuItem1.Name = "тестToolStripMenuItem1";
-            this.тестToolStripMenuItem1.Size = new System.Drawing.Size(96, 22);
-            this.тестToolStripMenuItem1.Text = "тест";
+            this.тестToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.тестToolStripMenuItem1.Text = "Поиск по логину";
             this.тестToolStripMenuItem1.Click += new System.EventHandler(this.тестToolStripMenuItem1_Click);
             // 
             // richTextBox1
