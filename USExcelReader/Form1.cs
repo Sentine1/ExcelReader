@@ -50,15 +50,15 @@ namespace USExcelReader
                             ew.Add(worksheet.Cells[rowIndex, collumTest].Text);
                         }
 
-                        IEnumerable<string> row = worksheet.Cells[rowIndex, 1, rowIndex, totalCollumns].Select(c => c.Text == null ? string.Empty : c.Text);
-                        var list = row.ToList();
+                        //IEnumerable<string> row = worksheet.Cells[rowIndex, 1, rowIndex, totalCollumns].Select(c => c.Text == null ? string.Empty : c.Text);
+                        //var list = row.ToList();
                         var list2 = ew.ToList();
                         for (int i = 0; i < list2.Count; i++)
                         {
                             excelTableData[rowIndex - 1, i] = list2[i] == string.Empty ? "*" : list2[i];
                         }
                     }
-                    writeText();
+                    //writeText();
                 }
                 else
                     throw new Exception("File not found");
@@ -69,36 +69,41 @@ namespace USExcelReader
             }  
         }
 
-        protected void writeText()
+        protected void writeText(string filter = "", int position = -1)
         {
             richTextBox1.Clear();
-            for (int i = 0; i < totalRows; i++)
+            richTextBox1.Text += excelTableData[0, 1] + "\t\t\t\t" + excelTableData[0, 2] + "\t\t" + excelTableData[0, 18] + "\t\t" + excelTableData[0, 19] + "\n";
+            var Dictionary = new Dictionary<string,int>();
+            for (int i = 1; i < totalRows; i++)
             {
-                for (int j = 0; j < totalCollumns; j++)
-                {
-                    if (textBox1.Text != string.Empty )
-                        if (excelTableData[i, 2] != userName ||
-                        excelTableData[i, 3] != usserLogin)
+                if (filter != string.Empty && position != -1)
+                    if (!excelTableData[i, position].Contains(filter))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        if (Dictionary.ContainsKey(excelTableData[i, 1] + excelTableData[i, 2] + excelTableData[i, 18]))
+                            Dictionary[excelTableData[i, 1] + excelTableData[i, 2] + excelTableData[i, 18]]++;
+                        else
                         {
-                            j += totalCollumns;
-                            continue;
+                            richTextBox1.Text += excelTableData[i, 1] + "\t" + excelTableData[i, 2] + "\t" + excelTableData[i, 18] + "\t" + excelTableData[i, 19] + "\n";
+                            Dictionary.Add((excelTableData[i, 1] + excelTableData[i, 2] + excelTableData[i, 18]), 1);
                         }
-                    richTextBox1.Text += excelTableData[i, j] + " ";
-                }
-                richTextBox1.Text += "\n";
+                    }
             }
         }
 
         private void тестToolStripMenuItem_Click(object sender, EventArgs e)
         {
             userName = textBox1.Text;
-            writeText();
+            writeText(userName, 1);
         }
 
         private void тестToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             usserLogin = textBox1.Text;
-            writeText();
+            writeText(usserLogin, 2);
         }
     }
 }
