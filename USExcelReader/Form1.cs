@@ -72,7 +72,7 @@ namespace USExcelReader
         protected void writeText(string filter = "", int position = -1)
         {
             richTextBox1.Clear();
-            richTextBox1.Text += excelTableData[0, 1] + "\t\t\t\t" + excelTableData[0, 2] + "\t\t" + excelTableData[0, 18] + "\t\t" + excelTableData[0, 19] + "\n";
+            richTextBox1.Text += excelTableData[0, 1] + "\t\t\t\t" + excelTableData[0, 2] + "\t\t" + excelTableData[0, 18] + "\t\t\t" + excelTableData[0, 19] + "\n";
             var Dictionary = new Dictionary<string,int>();
             for (int i = 1; i < totalRows; i++)
             {
@@ -87,7 +87,8 @@ namespace USExcelReader
                             Dictionary[excelTableData[i, 1] + excelTableData[i, 2] + excelTableData[i, 18]]++;
                         else
                         {
-                            richTextBox1.Text += excelTableData[i, 1] + "\t" + excelTableData[i, 2] + "\t" + excelTableData[i, 18] + "\t" + excelTableData[i, 19] + "\n";
+                            richTextBox1.Text +=$"{excelTableData[i, 1], 0}" + " " + $"{excelTableData[i, 2], 20}" + " " +
+                                $"{excelTableData[i, 18], 30}" + " " +$"{excelTableData[i, 19], 40}" + "\n";
                             Dictionary.Add((excelTableData[i, 1] + excelTableData[i, 2] + excelTableData[i, 18]), 1);
                         }
                     }
